@@ -1,5 +1,6 @@
 package com.dkit.gd2.johnloane;
 
+import java.util.InputMismatchException;
 import java.util.Scanner;
 
 /**
@@ -22,13 +23,77 @@ public class Primitives
         //investigateBooleans();
         //investigateStrings();
         //testTypedDivision();
-        float weightInPounds = getWeightInPounds(keyboard);
-        System.out.printf("%.1f", convertPoundsKilos(WEIGHT_IN_POUNDS));
+        //float weightInPounds = getWeightInPounds(keyboard);
+        //System.out.println(Colours.BLUE + "This should be in blue");
+        //System.out.println(Colours.PURPLE+ "I wonder what colour this is?");
+
+        System.out.println(getWeightInPounds(keyboard));
+        //System.out.printf("%.1f", convertPoundsKilos(getWeightInPounds(keyboard)));
 
 
         /*int score = 65535;
         printBinary(score);*/
 
+    }
+/*
+TODO Fix the LBYL function so that it works - the solution will be similar to the try catch - you will have add a loop and get the recursive calls to the function
+ */
+//    private static float getWeightInPounds(Scanner keyboard)
+//    {
+//        float weightInPounds = Constants.INVALID_WEIGHT;
+//        System.out.print("Please enter your weight in pounds > ");
+//        if(keyboard.hasNextFloat())
+//        {
+//            weightInPounds = keyboard.nextFloat();
+//            System.out.println(weightInPounds);
+//            if(weightInPounds <= 0)
+//            {
+//                System.out.println(Colours.RED+"Please enter a weight which is greater than 0"+Colours.RESET);
+//                getWeightInPounds(keyboard);
+//            }
+//            else
+//            {
+//                System.out.println("Weight in pounds is good, returning " + weightInPounds);
+//            }
+//        }
+//        else
+//        {
+//            System.out.println(Colours.RED + "Please enter a float"+Colours.RESET);
+//            keyboard.next();
+//            getWeightInPounds(keyboard);
+//        }
+//        System.out.println("Returning " + weightInPounds);
+//        return weightInPounds;
+//    }
+
+    /*
+    TODO Fix this method so that it can handle blank input and space input
+     */
+    private static float getWeightInPounds(Scanner keyboard)
+    {
+        float weightInPounds = Constants.INVALID_WEIGHT;
+        while(true)
+        {
+            try
+            {
+                System.out.print("Please enter your weight in pounds > ");
+                weightInPounds = keyboard.nextFloat();
+                if(weightInPounds <= 0)
+                {
+                    throw new IllegalArgumentException();
+                }
+                return weightInPounds;
+            }
+            catch (InputMismatchException ime)
+            {
+                keyboard.next();
+                System.out.println(Colours.RED + "Please enter a number" + Colours.RESET);
+            }
+            catch (IllegalArgumentException iae)
+            {
+                System.out.println(Colours.RED + "You must enter weight which is strictly greater than 0" + Colours.RESET);
+            }
+        }
     }
 
     private static float convertPoundsKilos(float weight_in_pounds)
